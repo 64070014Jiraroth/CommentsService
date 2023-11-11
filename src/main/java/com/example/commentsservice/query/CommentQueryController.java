@@ -25,7 +25,7 @@ public class CommentQueryController {
     }
 
     @GetMapping(value = "/getComment/{commentId}")
-    public CommentRestModel getBookByBookId(@PathVariable("commentId") String commentId) {
+    public CommentRestModel getCommentById(@PathVariable("commentId") String commentId) {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setContentType("application/json");
         Object comment = rabbitTemplate.convertSendAndReceive("Direct", "getCommentId", commentId);

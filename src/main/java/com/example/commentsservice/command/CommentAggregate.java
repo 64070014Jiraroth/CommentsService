@@ -50,6 +50,8 @@ public class CommentAggregate {
         this.commentDate = commentCreateEvent.getCommentDate();
         this.commentDetail = commentCreateEvent.getCommentDetail();
         this.reportCount = commentCreateEvent.getReportCount();
+        this.chapterId = commentCreateEvent.getChapterId();
+        this.bookId = commentCreateEvent.getBookId();
     }
 
     //UPDATE
@@ -71,6 +73,8 @@ public class CommentAggregate {
         this.commentDate = commentUpdateEvent.getCommentDate();
         this.commentDetail = commentUpdateEvent.getCommentDetail();
         this.reportCount = commentUpdateEvent.getReportCount();
+        this.chapterId = commentUpdateEvent.getChapterId();
+        this.bookId = commentUpdateEvent.getBookId();
     }
 
     //DELETE
@@ -92,6 +96,9 @@ public class CommentAggregate {
         this.commentDate = commentDeleteEvent.getCommentDate();
         this.commentDetail = commentDeleteEvent.getCommentDetail();
         this.reportCount = commentDeleteEvent.getReportCount();
+        this.chapterId = commentDeleteEvent.getChapterId();
+        this.bookId = commentDeleteEvent.getBookId();
+
     }
 
 }

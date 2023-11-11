@@ -19,19 +19,19 @@ public class CommentEntity implements Serializable {
     private Date commentDate;
     private String commentDetail;
     private Integer reportCount;
-//    private String chapterId;
-//    private String bookId;
+    private String chapterId;
+    private String bookId;
 
     public CommentEntity() {}
 
-    public CommentEntity(String commentId, String userId, Date commentDate, String commentDetail, Integer reportCount) {
+    public CommentEntity(String commentId, String userId, Date commentDate, String commentDetail, Integer reportCount, String chapterId, String bookId) {
         this.commentId = commentId;
         this.userId = userId;
         this.commentDate = commentDate;
         this.commentDetail = commentDetail;
         this.reportCount = reportCount;
-//        this.chapterId = chapterId;
-//        this.bookId = bookId;
+        this.chapterId = chapterId;
+        this.bookId = bookId;
 
     }
 }

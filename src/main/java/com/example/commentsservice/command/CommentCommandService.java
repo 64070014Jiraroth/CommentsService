@@ -11,7 +11,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -40,8 +39,8 @@ public class CommentCommandService {
                 .commentDate(model.getCommentDate())
                 .commentDetail(model.getCommentDetail())
                 .reportCount(model.getReportCount())
-//                .bookId(model.getBookId())
-//                .chapterId(model.getChapterId())
+                .bookId(model.getBookId())
+                .chapterId(model.getChapterId())
                 .build();
 
         try {
@@ -54,17 +53,16 @@ public class CommentCommandService {
     //Update
     @RabbitListener(queues = "updateCommentQueue")
     public void updateComment(CommentRestModel model) {
-        System.out.println("CommentCommandService : update ID : " + model);
-//        System.out.println("CommentCommandService : update ID : " + model.getBookId());
+        System.out.println("CommentCommandService : update ID : " + model.getBookId());
 
         UpdateCommentCommand updateCommentCommand = UpdateCommentCommand.builder()
-                .commentId(UUID.randomUUID().toString())
+                .commentId(model.getCommentId())
                 .userId(model.getUserId())
                 .commentDate(model.getCommentDate())
                 .commentDetail(model.getCommentDetail())
                 .reportCount(model.getReportCount())
-//                .bookId(model.getBookId())
-//                .chapterId(model.getChapterId())
+                .bookId(model.getBookId())
+                .chapterId(model.getChapterId())
                 .build();
 
         try {
@@ -79,20 +77,22 @@ public class CommentCommandService {
         System.out.println("CommentCommandService : delete ID : " + commentId);
 
         CommentEntity commentEntity = commentRepository.findCommentEntityByCommentId(commentId);
+//        System.out.println("commentEntity : " + commentEntity);
 
         if(commentEntity != null) {
             DeleteCommentCommand deleteCommentCommand = DeleteCommentCommand.builder()
-                    .commentId(UUID.randomUUID().toString())
+                    .commentId(commentEntity.getCommentId())
                     .userId(commentEntity.getUserId())
                     .commentDate(commentEntity.getCommentDate())
                     .commentDetail(commentEntity.getCommentDetail())
                     .reportCount(commentEntity.getReportCount())
-//                    .bookId(commentEntity.getBookId())
-//                    .chapterId(commentEntity.getChapterId())
+                    .bookId(commentEntity.getBookId())
+                    .chapterId(commentEntity.getChapterId())
                     .build();
 
             try {
                 commandGateway.sendAndWait(deleteCommentCommand);
+                System.out.println("deleteCommentCommand" + deleteCommentCommand);
             } catch (Exception e) {
                 e.printStackTrace();
             }

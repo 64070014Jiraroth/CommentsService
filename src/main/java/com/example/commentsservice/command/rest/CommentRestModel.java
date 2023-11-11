@@ -12,6 +12,6 @@ public class CommentRestModel implements Serializable {
     private Date commentDate;
     private String commentDetail;
     private Integer reportCount;
-//    private String chapterId;
-//    private String bookId;
+    private String chapterId;
+    private String bookId;
 }
