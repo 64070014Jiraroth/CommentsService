@@ -23,6 +23,8 @@ public class CommentAggregate {
     private Date commentDate;
     private String commentDetail;
     private Integer reportCount;
+    private String chapterId;
+    private String bookId;
 
     public CommentAggregate() {}
 
