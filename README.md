@@ -5,29 +5,35 @@
  - Queues: addCommentQueue
  - Exchanges: Direct
  - Routing key: addComment
-#### Delete Comment
- - Queues: deleteCommentQueue
- - Exchanges: Direct
- - Routing key: deleteComment
-#### Get Comment By Id
- - Queues: getCommentIdQueue
- - Exchanges: Direct
- - Routing key: getCommentId
-#### Get Comment
- - Queues: getCommentQueue
- - Exchanges: Direct
- - Routing key: getComment
 #### Update Comment
  - Queues: updateCommentQueue
  - Exchanges: Direct
  - Routing key: updateComment
+#### Delete Comment
+ - Queues: deleteCommentQueue
+ - Exchanges: Direct
+ - Routing key: deleteComment
+#### Get Comment
+ - Queues: getCommentQueue
+ - Exchanges: Direct
+ - Routing key: getComment
+#### Get Comment By Id
+ - Queues: getCommentIdQueue
+ - Exchanges: Direct
+ - Routing key: getCommentId
+#### Get Comment By ChapterId
+ - Queues: getCommentByChapterIdQueue
+ - Exchanges: Direct
+ - Routing key: getChapterId
+
 
 # Path
-- Add Comment (POST)   : http://localhost:8082/comment-service/addComment
-- Get Comment (GET)    : http://localhost:8082/comment-service/getComment
-- Get CommentById (process)
-- Update Comment (PUT) : http://localhost:8082/comment-service/updateComment
-- Delete Comment (DEL) : http://localhost:8082/comment-service/deleteComment/(commentId)
+- Add Comment (POST)    : http://localhost:8082/comment-service/addComment
+- Get Comment (GET)     : http://localhost:8082/comment-service/getComment
+- Get CommentById (GET) : http://localhost:8082/comment-service/getComment/(commentId)
+- Get CommentByChapterId (in process)
+- Update Comment (PUT)  : http://localhost:8082/comment-service/updateComment
+- Delete Comment (DEL)  : http://localhost:8082/comment-service/deleteComment/(commentId)
 
 
 # ETC.
