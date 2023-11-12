@@ -23,6 +23,8 @@ public class CommentQueryHandler {
 
     @QueryHandler
     public List<CommentRestModel> findComments(FindCommentsQuery findCommentsQuery) {
+        System.out.println("CommentQueryHandler findComments " + findCommentsQuery);
+
         List<CommentRestModel> commentRest = new ArrayList<>();
         List<CommentEntity> storedComments = commentRepository.findAll();
         for (CommentEntity commentEntity : storedComments) {
@@ -33,9 +35,10 @@ public class CommentQueryHandler {
         return commentRest;
     }
 
-    @Query
-    public CommentRestModel FindCommentsByCommentId(FindCommentsByCommentIdQuery query) {
+    @QueryHandler
+    public CommentRestModel findCommentsByCommentId(FindCommentsByCommentIdQuery query) {
         CommentEntity commentEntity = commentRepository.findCommentEntityByCommentId(query.getCommentId());
+        System.out.println("CommentQueryHandler findCommentsByCommentId : "+ query);
 
         if(commentEntity != null) {
             CommentRestModel commentRestModel = new CommentRestModel();

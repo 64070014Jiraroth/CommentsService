@@ -26,9 +26,17 @@ public class CommentQueryController {
 
     @GetMapping(value = "/getComment/{commentId}")
     public CommentRestModel getCommentById(@PathVariable("commentId") String commentId) {
-        MessageProperties messageProperties = new MessageProperties();
-        messageProperties.setContentType("application/json");
-        Object comment = rabbitTemplate.convertSendAndReceive("Direct", "getCommentId", commentId);
-        return (CommentRestModel) comment;
+        System.out.println("getMapping ID: " + commentId);
+        try {
+            MessageProperties messageProperties = new MessageProperties();
+            messageProperties.setContentType("application/json");
+            Object comment = rabbitTemplate.convertSendAndReceive("Direct", "getCommentId", commentId);
+            return (CommentRestModel) comment;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommentRestModel();
+        }
+
+
     }
 }

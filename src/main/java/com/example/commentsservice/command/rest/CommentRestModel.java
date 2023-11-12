@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class CommentRestModel implements Serializable {
+public class CommentRestModel {
     private String commentId;
     private String userId;
     private Date commentDate;
