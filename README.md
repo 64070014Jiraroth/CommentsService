@@ -35,6 +35,17 @@
 - Update Comment (PUT)  : http://localhost:8082/comment-service/updateComment
 - Delete Comment (DEL)  : http://localhost:8082/comment-service/deleteComment/(commentId)
 
+## addComment
+- body raw JSON
+{
+"userId": 1,
+"commentDate": {{$timestamp}},
+"commentDetail": "abcdefg",
+"reportCount": 0,
+"chapterId": "2",
+"bookId" : "001"
+}
+
 
 # ETC.
 ### Reference Documentation
