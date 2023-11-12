@@ -18,7 +18,7 @@
  - Exchanges: Direct
  - Routing key: getComment
 #### Get Comment By Id
- - Queues: getCommentIdQueue
+ - Queues: getCommentByIdQueue
  - Exchanges: Direct
  - Routing key: getCommentId
 #### Get Comment By ChapterId
