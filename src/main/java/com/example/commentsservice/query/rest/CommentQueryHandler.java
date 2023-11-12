@@ -3,6 +3,7 @@ package com.example.commentsservice.query.rest;
 import com.example.commentsservice.command.rest.CommentRestModel;
 import com.example.commentsservice.core.data.CommentEntity;
 import com.example.commentsservice.core.data.CommentRepository;
+import com.example.commentsservice.query.rest.comment.FindCommentsByChapterIdQuery;
 import com.example.commentsservice.query.rest.comment.FindCommentsByCommentIdQuery;
 import com.example.commentsservice.query.rest.comment.FindCommentsQuery;
 import org.axonframework.queryhandling.QueryHandler;
@@ -38,7 +39,22 @@ public class CommentQueryHandler {
     @QueryHandler
     public CommentRestModel findCommentsByCommentId(FindCommentsByCommentIdQuery query) {
         CommentEntity commentEntity = commentRepository.findCommentEntityByCommentId(query.getCommentId());
-        System.out.println("CommentQueryHandler findCommentsByCommentId : "+ query);
+        System.out.println("CommentQueryHandler findCommentsByCommentId");
+
+        if(commentEntity != null) {
+            CommentRestModel commentRestModel = new CommentRestModel();
+            BeanUtils.copyProperties(commentEntity, commentRestModel);
+            return commentRestModel;
+        } else {
+            return null;
+        }
+    }
+
+
+    @QueryHandler
+    public CommentRestModel findCommentsByChapterId(FindCommentsByChapterIdQuery query) {
+        CommentEntity commentEntity = commentRepository.findCommentEntityByChapterId(query.getChapterId());
+        System.out.println("CommentQueryHandler findCommentsByChapterId");
 
         if(commentEntity != null) {
             CommentRestModel commentRestModel = new CommentRestModel();

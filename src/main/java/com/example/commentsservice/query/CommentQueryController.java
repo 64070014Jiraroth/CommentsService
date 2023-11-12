@@ -37,6 +37,20 @@ public class CommentQueryController {
             return new CommentRestModel();
         }
 
+    }
+
+    @GetMapping(value = "/getComment/chapter/{chapterId}")
+    public CommentRestModel getCommentByChapterId(@PathVariable("chapterId") String chapterId) {
+        System.out.println("getMapping ID: " + chapterId);
+        try {
+//            MessageProperties messageProperties = new MessageProperties();
+//            messageProperties.setContentType("application/json");
+            Object comment = rabbitTemplate.convertSendAndReceive("Direct", "getChapterId", chapterId);
+            return (CommentRestModel) comment;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommentRestModel();
+        }
 
     }
 }
