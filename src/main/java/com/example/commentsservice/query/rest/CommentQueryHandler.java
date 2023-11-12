@@ -8,11 +8,9 @@ import com.example.commentsservice.query.rest.comment.FindCommentsByCommentIdQue
 import com.example.commentsservice.query.rest.comment.FindCommentsQuery;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class CommentQueryHandler {
@@ -37,8 +35,8 @@ public class CommentQueryHandler {
     }
 
     @QueryHandler
-    public CommentRestModel findCommentsByCommentId(FindCommentsByCommentIdQuery query) {
-        CommentEntity commentEntity = commentRepository.findCommentEntityByCommentId(query.getCommentId());
+    public CommentRestModel findCommentsByCommentId(FindCommentsByCommentIdQuery findCommentsByCommentIdQuery) {
+        CommentEntity commentEntity = commentRepository.findCommentEntityByCommentId(findCommentsByCommentIdQuery.getCommentId());
         System.out.println("CommentQueryHandler findCommentsByCommentId");
 
         if(commentEntity != null) {
@@ -46,22 +44,32 @@ public class CommentQueryHandler {
             BeanUtils.copyProperties(commentEntity, commentRestModel);
             return commentRestModel;
         } else {
+            System.out.println("can't find this commentID : " + findCommentsByCommentIdQuery.getCommentId());
             return null;
         }
     }
-
 
     @QueryHandler
-    public CommentRestModel findCommentsByChapterId(FindCommentsByChapterIdQuery query) {
-        CommentEntity commentEntity = commentRepository.findCommentEntityByChapterId(query.getChapterId());
-        System.out.println("CommentQueryHandler findCommentsByChapterId");
+    public List<CommentRestModel> findCommentsByChapterId(FindCommentsByChapterIdQuery findCommentsByChapterIdQuery) {
+        List<CommentEntity> commentEntities = (List<CommentEntity>) commentRepository.findCommentEntityByChapterId(findCommentsByChapterIdQuery.getChapterId());
+        System.out.println("commentEntities: " + commentEntities);
+        System.out.println("CommentQueryHandler findCommentsByChapterIdQuery: " + findCommentsByChapterIdQuery.getChapterId());
 
-        if(commentEntity != null) {
-            CommentRestModel commentRestModel = new CommentRestModel();
-            BeanUtils.copyProperties(commentEntity, commentRestModel);
-            return commentRestModel;
+        List<CommentRestModel> commentRestModels = new ArrayList<>();
+
+        if (commentEntities != null && !commentEntities.isEmpty()) {
+            for (CommentEntity commentEntity : commentEntities) {
+                CommentRestModel commentRestModel = new CommentRestModel();
+                BeanUtils.copyProperties(commentEntity, commentRestModel);
+                commentRestModels.add(commentRestModel);
+                System.out.println("commentRestModel: " + commentRestModel);
+            }
+            return commentRestModels;
         } else {
-            return null;
+            System.out.println("No comments found for chapterID: " + findCommentsByChapterIdQuery.getChapterId());
+            return Collections.emptyList();
         }
     }
+
+
 }

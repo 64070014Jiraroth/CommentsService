@@ -7,16 +7,20 @@ import com.example.commentsservice.query.rest.comment.FindCommentsQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CommentQueryService {
 
     @Autowired
     private QueryGateway queryGateway;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public CommentQueryService(QueryGateway queryGateway) {
         this.queryGateway = queryGateway;
@@ -46,13 +50,15 @@ public class CommentQueryService {
 
 
     @RabbitListener(queues = "getCommentByChapterIdQueue")
-    public CommentRestModel getCommentByChapterId(String chapterId) {
+    public List<CommentRestModel> getCommentByChapterId(String chapterId) {
         System.out.println("GET Comment By ChapterID: " + chapterId);
 
         FindCommentsByChapterIdQuery findCommentsByChapterIdQuery = new FindCommentsByChapterIdQuery(chapterId);
         return queryGateway.query(
                 findCommentsByChapterIdQuery,
-                ResponseTypes.instanceOf(CommentRestModel.class)
+                ResponseTypes.multipleInstancesOf(CommentRestModel.class)
         ).join();
     }
+
+
 }

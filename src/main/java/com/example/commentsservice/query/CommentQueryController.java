@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.*;
 
 @RestController
 public class CommentQueryController {
@@ -26,7 +26,7 @@ public class CommentQueryController {
 
     @GetMapping(value = "/getComment/{commentId}")
     public CommentRestModel getCommentById(@PathVariable("commentId") String commentId) {
-        System.out.println("getMapping ID: " + commentId);
+        System.out.println("getMapping CommentID: " + commentId);
         try {
             MessageProperties messageProperties = new MessageProperties();
             messageProperties.setContentType("application/json");
@@ -40,17 +40,14 @@ public class CommentQueryController {
     }
 
     @GetMapping(value = "/getComment/chapter/{chapterId}")
-    public CommentRestModel getCommentByChapterId(@PathVariable("chapterId") String chapterId) {
-        System.out.println("getMapping ID: " + chapterId);
-        try {
-//            MessageProperties messageProperties = new MessageProperties();
-//            messageProperties.setContentType("application/json");
-            Object comment = rabbitTemplate.convertSendAndReceive("Direct", "getChapterId", chapterId);
-            return (CommentRestModel) comment;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommentRestModel();
-        }
+    public List<CommentRestModel> getCommentByChapterId(@PathVariable("chapterId") String chapterId) {
+        System.out.println("GET Mapping ChapterID: " + chapterId);
 
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("application/json");
+
+        Object comment = rabbitTemplate.convertSendAndReceive("Direct", "getChapterId", chapterId);
+        return (List<CommentRestModel>) comment;
     }
+
 }
